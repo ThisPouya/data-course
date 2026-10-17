@@ -324,7 +324,10 @@
         gap: 0.6rem;
         max-width: 48rem;
       }
-      #sessions-list { display: grid; grid-auto-rows: 1fr; }
+      #sessions-list { display: grid; }
+      @media (min-width: 641px) { #sessions-list { grid-auto-rows: 1fr; } }
+      .session { flex-wrap: wrap; }
+      .s-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
       .session,
       .resource {
         display: flex;
@@ -347,7 +350,7 @@
         padding: 0.2rem 0.5rem;
         white-space: nowrap;
       }
-      .s-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+      .s-body { flex: 1 1 14rem; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
       .s-title,
       .r-title { font-weight: 600; }
       .s-badge, .s-link { font-family: var(--font-sans); }
@@ -1291,6 +1294,8 @@
           }
           if (m.childNodes.length) body.appendChild(m);
           li.appendChild(body);
+          var acts = document.createElement("div");
+          acts.className = "s-actions";
           if (s.details && s.details.length) {
             var d = document.createElement("button");
             d.type = "button";
@@ -1304,19 +1309,27 @@
               lead.classList.add("modal-meta");
               openModal(s.title, [{ heading: "توضیحات تکمیلی", items: s.details }], lead);
             });
-            li.appendChild(d);
+            acts.appendChild(d);
           }
-          if (s.join) {
+          function linkButton(href, icon, label) {
             var j = document.createElement("a");
             j.className = "s-more";
-            j.href = s.join;
+            j.href = href;
             j.target = "_blank";
             j.rel = "noopener";
             j.innerHTML =
               '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-              '<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>' +
-              "</svg>ورود به کلاس";
-            li.appendChild(j);
+              icon + "</svg>" + label;
+            acts.appendChild(j);
+          }
+          if (s.join) {
+            linkButton(s.join, '<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>', "ورود به کلاس");
+          }
+          if (s.video) {
+            linkButton(s.video, '<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8z"/>', "فیلم جلسه");
+          }
+          if (s.slides) {
+            linkButton(s.slides, '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>', "اسلایدها");
           }
           if (s.link) {
             var a = document.createElement("a");
@@ -1326,8 +1339,9 @@
             a.rel = "noopener";
             a.dir = "ltr";
             a.textContent = "مشاهده ↗";
-            li.appendChild(a);
+            acts.appendChild(a);
           }
+          if (acts.childNodes.length) li.appendChild(acts);
           return li;
         }
         function resourceCard(r) {
