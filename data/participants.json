@@ -176,5 +176,17 @@
     "experience": [
       "BI Developer and Data Engineer in Abidi Company"
     ]
+  },
+  {
+    "name": "Alireza Nezhadshamsi",
+    "linkedin": "https://www.linkedin.com/in/alee-rezaa/",
+    "avatar": "https://github.com/AleeRezaa.png",
+    "education": [
+      "B.Sc. of Industrial Engineering at KNTU",
+      "M.Sc. of Financial Engineering at KNTU"
+    ],
+    "experience": [
+      "Data Engineer at Mofid Securities"
+    ]
   }
 ]
