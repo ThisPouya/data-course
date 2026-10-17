@@ -374,6 +374,7 @@
         transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
       }
       .s-more:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
+      a.s-more { text-decoration: none; }
       .modal-meta { margin-top: 0.25rem; }
       .s-meta-item { display: inline-flex; align-items: center; gap: 0.4rem; }
       .s-meta-item svg { flex: none; color: var(--accent); }
@@ -1303,6 +1304,18 @@
               openModal(s.title, [{ heading: "توضیحات تکمیلی", items: s.details }], lead);
             });
             li.appendChild(d);
+          }
+          if (s.join) {
+            var j = document.createElement("a");
+            j.className = "s-more";
+            j.href = s.join;
+            j.target = "_blank";
+            j.rel = "noopener";
+            j.innerHTML =
+              '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>' +
+              "</svg>ورود به کلاس";
+            li.appendChild(j);
           }
           if (s.link) {
             var a = document.createElement("a");
